@@ -8,27 +8,27 @@ export class DocumentsController {
   constructor(private readonly documentsService: DocumentsService) {}
 
   @Post()
-  create(@Body() createDocumentDto: CreateDocumentDto) {
-    return this.documentsService.create(createDocumentDto);
+  createDocument(@Body() createDocumentDto: CreateDocumentDto) {
+    return this.documentsService.createDocument(createDocumentDto);
   }
 
   @Get()
-  findAll() {
-    return this.documentsService.findAll();
+  getAllDocuments() {
+    return this.documentsService.getAllDocuments();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.documentsService.findOne(+id);
+  getDocumentById(@Param('id') id: number) {
+    return this.documentsService.getDocumentById(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDocumentDto: UpdateDocumentDto) {
-    return this.documentsService.update(+id, updateDocumentDto);
+  updateDocument(@Param('id') id: number, @Body() updateDocumentDto: UpdateDocumentDto) {
+    return this.documentsService.updateDocument(id, updateDocumentDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.documentsService.remove(+id);
+  deleteDocument(@Param('id') id: number) {
+    return this.documentsService.deleteDocument(id);
   }
 }
