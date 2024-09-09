@@ -1,26 +1,37 @@
+import { OpenAI, CreateCompletionRequest } from 'openai';
 import { Injectable } from '@nestjs/common';
 import { CreateChatDto } from './dto/create-chat.dto';
-import { UpdateChatDto } from './dto/update-chat.dto';
 
 @Injectable()
 export class ChatService {
-  create(createChatDto: CreateChatDto) {
-    return 'This action adds a new chat';
+  private readonly OpenAIApi: OpenAI;
+
+  constructor() {
+    const configuration = new Configuration({
+      organization: process.env.ORGANIZATION_ID,
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
+    this.OpenAIApi = new OpenAI(configuration);
   }
 
-  findAll() {
-    return `This action returns all chat`;
-  }
+  async createCompletion({
+    question,
+    model,
+    temperature,
+  }: CreateChatDto) {
+    try {
+      const params: CreateCompletionRequest = {
+        prompt: question,
+        model: model || 'text-davinci-003',
+        temperature: temperature || 0.9,
+      };
 
-  findOne(id: number) {
-    return `This action returns a #${id} chat`;
-  }
+      const { data } = await this.OpenAIApi.createCompletion(params);
 
-  update(id: number, updateChatDto: UpdateChatDto) {
-    return `This action updates a #${id} chat`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} chat`;
-  }
+      return data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 }

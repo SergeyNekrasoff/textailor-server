@@ -8,6 +8,7 @@ import { DocumentsModule } from './documents/documents.module';
 import { ChatModule } from './chat/chat.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersService } from './users/users.service';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { UsersService } from './users/users.service';
     //   synchronize: false,
     //   logging: true,
     // }),
+    DatabaseModule,
     UsersModule,
     AuthModule,
     DocumentsModule,
